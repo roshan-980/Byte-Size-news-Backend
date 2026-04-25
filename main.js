@@ -3,7 +3,6 @@ const app = express()
 app.use(express.json());
 const dotenv = require('dotenv').config()
 const path =require("path");
-app.use(express.static(path.join(__dirname, "../frontend")));
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const cors = require("cors");
@@ -15,6 +14,7 @@ const mongoose = require("mongoose");
 async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGODB_URL);
+    console.log("Connected to MongoDB");
   } catch (err) {
     console.error("Error connecting to MongoDB: ", err);
   }
@@ -36,8 +36,10 @@ app.use('/otp', otproute);
 app.use('/save', savefeatureroute);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+
 })
 
-app.listen(process.env.port, () => {})
+app.listen(process.env.port, () => {
+    console.log(`Server is running on port ${process.env.port}`);
+})
 
