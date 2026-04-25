@@ -6,6 +6,11 @@ const path =require("path");
 app.use(express.static(path.join(__dirname, "../frontend")));
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+const cors = require("cors");
+app.use(cors({
+  origin: true, // temporary (we'll fix later)
+  credentials: true
+}));
 const mongoose = require("mongoose");
 async function connectDB() {
   try {
