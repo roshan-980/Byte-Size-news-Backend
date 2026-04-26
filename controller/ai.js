@@ -2,6 +2,14 @@ const express = require("express");
 const router = express.Router();
 router.post("/", (req, res) => {
   const content = req.body.content
+  const langNames = {
+    "en": "English",
+    "hi": "Hindi",
+    "mr": "Marathi",
+    "pa": "Punjabi"
+};
+  const lang = req.body.lang || "en"; // default to English if not provided
+  const langName = langNames[lang] || "English";
   const { CohereClientV2 } = require('cohere-ai');
   const cohere = new CohereClientV2({
     token: process.env.COHERE_API_KEY,
@@ -12,7 +20,8 @@ router.post("/", (req, res) => {
       messages: [
         {
           role: 'user',
-          content: 'Summarize the following article content in a concise paragraph of 2-3 lines  \n\n' + content,
+          content: `Summarize the following article content in a concise paragraph of 2-3 lines. 
+Reply strictly in ${langName} language only, do not use any other language.${content}`,
         },
       ],
     });
