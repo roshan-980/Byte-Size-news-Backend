@@ -13,6 +13,7 @@ app.use(cors({
 const mongoose = require("mongoose");
 async function connectDB() {
   try {
+    console.log("Connecting to MongoDB...");
     await mongoose.connect(process.env.MONGODB_URL);
     console.log("Connected to MongoDB");
   } catch (err) {
