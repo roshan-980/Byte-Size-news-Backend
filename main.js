@@ -9,14 +9,14 @@ const path =require("path");
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const cors = require("cors");
-// app.use(cors({
-//   origin: "https://byte-size-news-frontend.vercel.app/", // temporary (we'll fix later)
-//   credentials: true
-// }));
 app.use(cors({
-  origin: true,
+  origin: "https://byte-size-news-frontend.vercel.app",
   credentials: true
 }));
+// app.use(cors({
+//   origin: true,
+//   credentials: true
+// }));
 const mongoose = require("mongoose");
 async function connectDB() {
   try {
