@@ -11,6 +11,8 @@ router.post('/', async (req, res) => {
 
     if (!text) return res.status(400).json({ error: "No text provided" });
 
+    console.log("Calling ElevenLabs with:", { text: text.slice(0, 50), voiceid });
+
     const audioStream = await elevenlabs.textToSpeech.convert(
       voiceid || "JBFqnCBsd6RMkjVDRZzb",
       {
@@ -20,19 +22,19 @@ router.post('/', async (req, res) => {
       }
     );
 
-    res.set("Content-Type", "audio/mpeg");
+    console.log("Stream type:", audioStream.constructor.name);
+    console.log("Stream keys:", Object.keys(audioStream));
 
-    // It's a Node.js Readable — just pipe it directly
+    res.set("Content-Type", "audio/mpeg");
     audioStream.pipe(res);
 
     audioStream.on("error", (err) => {
       console.error("Stream error:", err);
-      res.status(500).json({ error: "Stream failed" });
     });
 
   } catch (err) {
-    console.error("TTS error:", err);
-    res.status(500).json({ error: "External TTS failed" });
+    console.error("TTS FULL ERROR:", err);  // <-- this will show the real reason
+    res.status(500).json({ error: err.message });  // send actual message to frontend too
   }
 });
 // define the about route
