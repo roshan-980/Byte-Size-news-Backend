@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const cors = require("cors");
 app.use(cors({
-  origin: true, // temporary (we'll fix later)
+  origin: "https://byte-size-news-frontend.vercel.app/", // temporary (we'll fix later)
   credentials: true
 }));
 const mongoose = require("mongoose");
