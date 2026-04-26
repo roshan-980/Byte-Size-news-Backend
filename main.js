@@ -1,3 +1,6 @@
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION:', err);
+});
 const express = require('express')
 const app = express()
 app.use(express.json());
